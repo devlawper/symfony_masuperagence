@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Édition d'un bien{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2>Éditer le bien</h2>
+
+        {% include 'admin/partials/_property-form.html.twig' with {button: 'Éditer'} %}
+    </div>
+{% endblock %}
+
+
