@@ -15,7 +15,7 @@
         <div class="row">
             {% for property in properties %}
                 {# @var property \App\Entity\Property  #}
-                <div class="card col-md-3 mx-1">
+                <div class="card col-md-3">
                     <div class="card-body">
                         <h5 class="card-title">
                             <a href="{{ path('property_show', {'slug': property.slug, 'id': property.id}) }}">{{ property.title }}</a>
