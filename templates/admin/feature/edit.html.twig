@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Édition d'une option{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2>Éditer l'option</h2>
+
+        {% include 'admin/partials/_feature-form.html.twig' with {button: 'Éditer'} %}
+    </div>
+{% endblock %}
+
+

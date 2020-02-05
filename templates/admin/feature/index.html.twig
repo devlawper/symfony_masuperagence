@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des options{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Gérer les options</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+            {% for feature in features %}
+                <tr>
+                    <td>{{ feature.name }}</td>
+                    <td>
+                        <a href="{{ path('admin_feature_edit', {'id': feature.id}) }}" class="btn btn-secondary">Éditer</a>
+                        <a href="{{ path('admin_feature_remove', {'id': feature.id}) }}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path('admin_feature_new') }}" class="btn btn-primary">Créer une nouvelle otpion</a>
+        </div>
+    </div>
+{% endblock %}

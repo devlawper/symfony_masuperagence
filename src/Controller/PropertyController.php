@@ -30,10 +30,6 @@ class PropertyController extends AbstractController
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            dump('ouii');
-        }
-
         $property = $paginator->paginate(
             $propertyRepository->findAllVisible($search),
             $request->query->getInt('page', 1),

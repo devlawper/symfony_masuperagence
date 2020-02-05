@@ -8,6 +8,7 @@
         <title>{% block title %}Mon agence{% endblock %}</title>
 
         {{ encore_entry_link_tags('app') }}
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
         {% block stylesheets %}{% endblock %}
     </head>
@@ -18,7 +19,10 @@
         {% block body %}{% endblock %}
 
         {{ encore_entry_script_tags('app') }}
-
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+        <script>
+            $('select').select2();
+        </script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
