@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\Property;
 use App\Entity\PropertySearch;
+use App\Form\ContactType;
 use App\Form\PropertySearchType;
+use App\Notification\ContactNotification;
 use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -46,10 +49,12 @@ class PropertyController extends AbstractController
     /**
      * @Route("/biens/{slug}-{id}", name="property_show", requirements={"slug": "[a-z0-9\-]*"})
      * @param Property $property
-     * @param PropertyRepository $propertyRepository
+     * @param string $slug
+     * @param Request $request
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function show(Property $property, string $slug, PropertyRepository $propertyRepository)
+    public function show(Property $property, string $slug, Request $request, ContactNotification $notification)
     {
         if ($property->getSlug() !== $slug) {
             $this->redirectToRoute('property_show', [
@@ -58,9 +63,29 @@ class PropertyController extends AbstractController
             ], 301);
         }
 
+        $contact = new Contact();
+        $contact->setProperty($property);
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $notification->notify($contact);
+
+            $this->addFlash(
+                'success',
+                'Merci pour votre message, nous vous répondrons dans les plus bref délais'
+            );
+
+            return $this->redirectToRoute('property_show', [
+                'id' => $property->getId(),
+                'slug' => $property->getSlug()
+            ]);
+        }
+
         return $this->render('property/show.html.twig', [
             'current_menu' => 'properties',
-            'property' => $property
+            'property' => $property,
+            'form' => $form->createView()
         ]);
     }
 }
