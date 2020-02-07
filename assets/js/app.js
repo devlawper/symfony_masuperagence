@@ -13,3 +13,13 @@ import $ from 'jquery';
 global.$ = global.jQuery = $;
 
 import 'bootstrap';
+import 'select2';
+
+$('select').select2();
+
+let contactBtn = $('#contactButton');
+contactBtn.click(e => {
+	e.preventDefault();
+	$('#contactForm').slideDown();
+	contactBtn.slideUp();
+})
